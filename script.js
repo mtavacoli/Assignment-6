@@ -9,9 +9,9 @@ $(document).ready(function () {
     weatherForecast(searchTerm);
   });
 
-  //search button enter key feature. 
+  //search button enter key feature.
   $("#search-button").keypress(function (event) {
-    var keycode = (event.keyCode ? event.keyCode : event.which);
+    var keycode = event.keyCode ? event.keyCode : event.which;
     if (keycode === 13) {
       weatherFunction(searchTerm);
       weatherForecast(searchTerm);
@@ -30,7 +30,7 @@ $(document).ready(function () {
     createRow(history[i]);
   }
 
-  //puts the searched cities underneath the previous searched city 
+  //puts the searched cities underneath the previous searched city
   function createRow(text) {
     var listItem = $("<li>").addClass("list-group-item").text(text);
     $(".history").append(listItem);
@@ -41,11 +41,43 @@ $(document).ready(function () {
     weatherFunction($(this).text());
     weatherForecast($(this).text());
   });
+});
+function weatherFunction(searchTerm) {
+  fetch(
+    `https://api.openweathermap.org/data/2.5/weather?q=${searchTerm}&units=imperial&appid=2d7cb52ab460b7ac9664d88f88ae807d`
+  )
+    .then(function (response) {
+      console.log(response);
+      return response.json();
+    })
+    .then(function (weatherData) {
+      console.log(weatherData);
+    });
+}
 
-  function weatherFunction(searchTerm) {
+function weatherForecast(searchTerm) {
+  fetch(
+    "api.openweathermap.org/data/2.5/forecast?q={city name}&appid=2d7cb52ab460b7ac9664d88f88ae807d"
+  )
+    .then(function (response) {
+      console.log(response);
+      return response.json();
+    })
+    .then(function (weatherData) {
+      console.log(weatherData);
+    });
+}
 
-    $.ajax({
-      type: "GET",
-      url: 
+//     $.ajax({
+//       type: "GET",
+//       url: "https://api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&appid={7afddf5328a74db83334492be055d162}"
 
-    }).then
+// var APIKey = "7afddf5328a74db83334492be055d162"
+
+//     }).then
+
+//     fetch("").then(function(tacocat) {
+// let pokename = tacocat.name
+
+// return "I choose " + pokename + "!"
+//     })
